@@ -1,9 +1,15 @@
 #ifndef Plc01_h
 #define Plc01_h
 
-const int slaveSelectPin2 = 10;
-const int slaveSelectPin1 = 9;
-const int outEnablePin = 6;
+// arduino uno
+//const int slaveSelectPin2 = 10;
+//const int slaveSelectPin1 = 9;
+//const int outEnablePin = 6;
+
+// esp 8266
+const int slaveSelectPin2 = D3;
+const int slaveSelectPin1 = D4;
+const int outEnablePin = D2;
 
 class Plc01
 {
