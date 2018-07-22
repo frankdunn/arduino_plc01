@@ -1,6 +1,6 @@
 import time
-from machine import Pin
-from machine import SPI
+from machine import Pin , SPI
+import Plc01
 
 cs = Pin(2, Pin.OUT)    # create output pin on GPIO0
 cs2 = Pin(0, Pin.OUT) 
@@ -19,18 +19,7 @@ while True:
   hspi.write_readinto(wbuf, rbuf) # write buf to MOSI and read MISO back into buf
   cs.on()
   udata = udata + 1
-  P0 = udata^(udata>>1)
-  P0 = P0 ^(P0 >> 2)
-  P0 = P0 ^(P0 >> 4)
-  P0 = P0 & 0x01
-  P1 = udata^(udata>>2)
-  P1 = P1 ^ (P1 >> 4)
-  P2 = P1 & 0x01
-  P1 = P1 & 0x02
-  P1 = P1 >> 1
-  nP0 = (~P0) & 0x01
-  parityData = (P2<<3)|(P1<<2)|(P0<<1)|nP0
-  wbuf2[1] = parityData
+  wbuf2[1] = Plc01.parityCalc(udata)
   wbuf2[0] = udata
   cs2.off()
   hspi.write_readinto(wbuf2, rbuf2)
